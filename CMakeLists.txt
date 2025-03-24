@@ -30,9 +30,9 @@ endif()
 
 LIST(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake_modules)
 
-find_package(OpenCV 4.4)
+find_package(OpenCV)
    if(NOT OpenCV_FOUND)
-      message(FATAL_ERROR "OpenCV > 4.4 not found.")
+      message(FATAL_ERROR "OpenCV not found.")
    endif()
 
 MESSAGE("OPENCV VERSION:")
@@ -40,7 +40,7 @@ MESSAGE(${OpenCV_VERSION})
 
 find_package(Eigen3 3.1.0 REQUIRED)
 find_package(Pangolin REQUIRED)
-find_package(realsense2)
+# find_package(realsense2)
 
 include_directories(
 ${PROJECT_SOURCE_DIR}
@@ -126,14 +126,14 @@ ${PROJECT_SOURCE_DIR}/Thirdparty/g2o/lib/libg2o.so
 )
 
 # If RealSense SDK is found the library is added and its examples compiled
-if(realsense2_FOUND)
-    include_directories(${PROJECT_NAME}
-    ${realsense_INCLUDE_DIR}
-    )
-    target_link_libraries(${PROJECT_NAME}
-    ${realsense2_LIBRARY}
-    )
-endif()
+# if(realsense2_FOUND)
+#     include_directories(${PROJECT_NAME}
+#     ${realsense_INCLUDE_DIR}
+#     )
+#     target_link_libraries(${PROJECT_NAME}
+#     ${realsense2_LIBRARY}
+#     )
+# endif()
 
 
 # Build examples
@@ -242,6 +242,10 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/Examples/Stereo-Inertia
 add_executable(stereo_inertial_euroc
         Examples/Stereo-Inertial/stereo_inertial_euroc.cc)
 target_link_libraries(stereo_inertial_euroc ${PROJECT_NAME})
+
+add_executable(stereo_inertial_kitti
+        Examples/Stereo-Inertial/stereo_inertial_kitti.cc)
+target_link_libraries(stereo_inertial_kitti ${PROJECT_NAME})
 
 add_executable(stereo_inertial_tum_vi
         Examples/Stereo-Inertial/stereo_inertial_tum_vi.cc)
